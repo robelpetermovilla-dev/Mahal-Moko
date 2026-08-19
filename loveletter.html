@@ -287,6 +287,70 @@
             background: white;
         }
 
+         /* -------------------------
+   Proceed Button
+------------------------- */
+
+    .proceed-container {
+    text-align: center;
+    margin-top: 30px;
+
+    opacity: 0;
+    transform: translateY(20px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+    }
+
+    .proceed-container.show {
+    opacity: 1;
+    transform: translateY(0);
+
+    pointer-events: auto;
+    }
+
+    #proceedButton {
+    border: none;
+
+    padding: 15px 25px;
+
+    border-radius: 30px;
+
+    background: linear-gradient(
+        135deg,
+        #4267c9,
+        #7c4dff
+    );
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(66, 103, 201, 0.4);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#proceedButton:hover {
+    transform: scale(1.08);
+
+    box-shadow:
+        0 12px 35px rgba(66, 103, 201, 0.6);
+}
+
+#proceedButton:active {
+    transform: scale(0.96);
+}
+
         /* -------------------------
            Mobile
         ------------------------- */
@@ -409,7 +473,12 @@
 
         </div>
 
-    </div>
+        <div class="proceed-container">
+    <button id="proceedButton">
+        💌 Proceed to the Actual Letter
+        </button>
+
+        </div>
 
 
     <!-- Audio -->
@@ -426,140 +495,198 @@
     </button>
 
 
-    <script>
+   <script>
 
-        /* =========================================
-           TYPEWRITER EFFECT
-        ========================================= */
+    /* =========================================
+       BUTTONS
+    ========================================= */
 
-        const paragraphs =
-            document.querySelectorAll(".message p");
+    const proceedButton =
+        document.getElementById("proceedButton");
 
-        const signature =
-            document.querySelector(".signature");
+    const proceedContainer =
+        document.querySelector(".proceed-container");
+
+    const musicButton =
+        document.getElementById("musicButton");
 
 
-        function typeParagraph(element) {
+    /* =========================================
+       TYPEWRITER EFFECT
+    ========================================= */
 
-            return new Promise((resolve) => {
+    const paragraphs =
+        document.querySelectorAll(".message p");
 
-                element.classList.add("typing");
+    const signature =
+        document.querySelector(".signature");
 
-                const originalHTML =
-                    element.innerHTML;
+
+    function typeParagraph(element) {
+
+        return new Promise((resolve) => {
+
+            element.classList.add("typing");
+
+            const originalHTML =
+                element.innerHTML;
+
+            const temp =
+                document.createElement("div");
+
+            temp.innerHTML = originalHTML;
+
+            const text =
+                temp.textContent;
+
+            element.innerHTML = "";
+
+            let index = 0;
+
+            const speed =
+                Number(element.dataset.speed) || 45;
+
+
+            function type() {
+
+                if (index < text.length) {
+
+                    element.textContent +=
+                        text.charAt(index);
+
+                    index++;
+
+                    setTimeout(type, speed);
+
+                } else {
+
+                    element.classList.remove("typing");
+
+                    resolve();
+                }
+            }
+
+            type();
+
+        });
+
+    }
+
+
+    /* =========================================
+       START LETTER
+    ========================================= */
+
+    async function startLetter() {
+
+        /* Wait for the card to appear */
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 1000)
+        );
+
+
+        /* Type paragraphs one by one */
+
+        for (const paragraph of paragraphs) {
+
+            await typeParagraph(paragraph);
+
+
+            /* Pause between paragraphs */
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 500)
+            );
+        }
+
+
+        /* Show signature */
+
+        signature.classList.add("show");
+
+
+        /* Give signature time to appear */
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 1500)
+        );
+
+
+        /* Show Proceed button */
+
+        proceedContainer.classList.add("show");
+    }
+
+
+    /* Start typewriter */
+
+    startLetter();
+
+
+    /* =========================================
+       PROCEED BUTTON
+    ========================================= */
+
+    proceedButton.addEventListener("click", () => {
+
+        window.location.href =
+            "actual-letter.html";
+
+    });
+
+
+    /* =========================================
+       MUSIC
+    ========================================= */
+
+    const music =
+        document.getElementById("loveMusic");
+
+    let musicPlaying = false;
+
+    music.volume = 0.5;
+
+
+    /* =========================================
+       TRY AUTOMATIC PLAY
+    ========================================= */
+
+    window.addEventListener("load", () => {
+
+        music.play()
+            .then(() => {
+
+                musicPlaying = true;
+
+                musicButton.textContent =
+                    "🔊 Music On";
+
+            })
+
+            .catch(() => {
 
                 /*
-                    We temporarily extract the text.
-
-                    This lets the words/letters appear
-                    one by one while preserving the
-                    original HTML such as <strong>.
+                    Browser blocked autoplay.
+                    Music will start after
+                    the first interaction.
                 */
 
-                const temp =
-                    document.createElement("div");
-
-                temp.innerHTML = originalHTML;
-
-                const text =
-                    temp.textContent;
-
-                element.innerHTML = "";
-
-                let index = 0;
-
-                const speed =
-                    Number(element.dataset.speed) || 45;
-
-
-                function type() {
-
-                    if (index < text.length) {
-
-                        element.textContent +=
-                            text.charAt(index);
-
-                        index++;
-
-                        setTimeout(type, speed);
-
-                    } else {
-
-                        /*
-                            Remove cursor after this
-                            paragraph finishes.
-                        */
-
-                        element.classList.remove("typing");
-
-                        resolve();
-                    }
-                }
-
-                type();
+                musicButton.textContent =
+                    "🎵 Play Music";
 
             });
 
-        }
+    });
 
 
-        async function startLetter() {
+    /* =========================================
+       START MUSIC AFTER INTERACTION
+    ========================================= */
 
-            /*
-                Small delay so the card appears first.
-            */
+    function startMusic() {
 
-            await new Promise(resolve =>
-                setTimeout(resolve, 1000)
-            );
-
-
-            for (const paragraph of paragraphs) {
-
-                await typeParagraph(paragraph);
-
-                /*
-                    Pause between paragraphs.
-                */
-
-                await new Promise(resolve =>
-                    setTimeout(resolve, 500)
-                );
-            }
-
-
-            /*
-                Show signature at the end.
-            */
-
-            signature.classList.add("show");
-        }
-
-
-        startLetter();
-
-
-        /* =========================================
-           MUSIC
-        ========================================= */
-
-        const music =
-            document.getElementById("loveMusic");
-
-        const musicButton =
-            document.getElementById("musicButton");
-
-
-        let musicPlaying = false;
-
-
-        /*
-            Try to autoplay when page opens.
-        */
-
-        window.addEventListener("load", () => {
-
-            music.volume = 0.5;
+        if (!musicPlaying) {
 
             music.play()
                 .then(() => {
@@ -570,30 +697,38 @@
                         "🔊 Music On";
 
                 })
-                .catch(() => {
+                .catch(() => {});
 
-                    /*
-                        Browser blocked autoplay.
-                        Music will start after the
-                        visitor interacts with the page.
-                    */
-
-                    musicButton.textContent =
-                        "🎵 Play Music";
-
-                });
-
-        });
+        }
+    }
 
 
-        /*
-            Play music when the user clicks/taps
-            anywhere if autoplay was blocked.
-        */
+    document.addEventListener(
+        "click",
+        startMusic,
+        { once: true }
+    );
 
-        function startMusic() {
 
-            if (!musicPlaying) {
+    document.addEventListener(
+        "touchstart",
+        startMusic,
+        { once: true }
+    );
+
+
+    /* =========================================
+       MUSIC BUTTON
+    ========================================= */
+
+    musicButton.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+
+            if (music.paused) {
 
                 music.play()
                     .then(() => {
@@ -604,61 +739,22 @@
                             "🔊 Music On";
 
                     })
-                    .catch(() => {
-
-                        console.log(
-                            "Music could not be played."
-                        );
-
-                    });
-            }
-        }
-
-
-        document.addEventListener(
-            "click",
-            startMusic,
-            { once: true }
-        );
-
-
-        document.addEventListener(
-            "touchstart",
-            startMusic,
-            { once: true }
-        );
-
-
-        /*
-            Music button
-        */
-
-        musicButton.addEventListener("click", (event) => {
-
-            event.stopPropagation();
-
-            if (music.paused) {
-
-                music.play();
-
-                musicButton.textContent =
-                    "🔊 Music On";
-
-                musicPlaying = true;
+                    .catch(() => {});
 
             } else {
 
                 music.pause();
 
+                musicPlaying = false;
+
                 musicButton.textContent =
                     "🔇 Music Off";
-
-                musicPlaying = false;
             }
 
-        });
+        }
+    );
 
-    </script>
+</script>
 
 </body>
 </html>
