@@ -1,0 +1,175 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For You ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        .letter {
+            position: relative;
+            width: min(700px, 95%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            animation: appear 1s ease;
+        }
+
+        .heart {
+            text-align: center;
+            font-size: 55px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e84372;
+            font-size: 38px;
+            margin: 15px 0 30px;
+        }
+
+        .message {
+            color: #4a4a4a;
+            font-size: 19px;
+            line-height: 1.8;
+        }
+
+        .signature {
+            margin-top: 35px;
+            text-align: right;
+            color: #e84372;
+            font-size: 22px;
+            font-style: italic;
+        }
+
+        .small-heart {
+            position: fixed;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .letter {
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .message {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating hearts -->
+    <div class="small-heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="small-heart" style="left: 25%; animation-delay: 2s;">💕</div>
+    <div class="small-heart" style="left: 45%; animation-delay: 4s;">❤️</div>
+    <div class="small-heart" style="left: 70%; animation-delay: 1s;">💗</div>
+    <div class="small-heart" style="left: 90%; animation-delay: 3s;">💕</div>
+
+    <div class="letter">
+
+        <div class="heart">❤️</div>
+
+        <h1>To My Love</h1>
+
+        <div class="message">
+
+            <p>
+                Dear <strong>[Her Name]</strong>,
+            </p>
+
+            <p>
+                I just wanted to make something special for you because
+                you mean so much to me.
+            </p>
+
+            <p>
+                Every moment I spend with you is something I appreciate,
+                and I'm really grateful to have you in my life.
+            </p>
+
+            <p>
+                You make my days brighter just by being yourself.
+                I hope you always know how special you are to me.
+            </p>
+
+            <p>
+                No matter what happens, I'll always treasure the memories
+                we've made together and all the moments still waiting for us.
+            </p>
+
+            <p>
+                I love you more than I can put into words. ❤️
+            </p>
+
+        </div>
+
+        <div class="signature">
+            With all my love,<br>
+            <strong>[Your Name] ❤️</strong>
+        </div>
+
+    </div>
+
+</body>
+</html>
+```

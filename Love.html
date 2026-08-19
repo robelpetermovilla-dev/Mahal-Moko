@@ -1,0 +1,148 @@
+w<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question For You ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e7, #ffeef5);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: min(90%, 500px);
+        }
+
+        h1 {
+            color: #ff4f81;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        button {
+            border: none;
+            padding: 14px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #yes {
+            background: #ff4f81;
+            color: white;
+        }
+
+        #yes:hover {
+            transform: scale(1.1);
+            background: #ff326d;
+        }
+
+        #no {
+            background: #ddd;
+            color: #555;
+            position: relative;
+        }
+
+        .heart {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="heart">❤️</div>
+
+        <h1>Do you love me?</h1>
+
+        <p>Choose wisely... 👀</p>
+
+        <div class="buttons">
+            <button id="yes">Yes ❤️</button>
+            <button id="no">No 😭</button>
+        </div>
+    </div>
+
+    <script>
+        const noButton = document.getElementById("no");
+        const yesButton = document.getElementById("yes");
+
+        // Change this to the URL of your actual letter
+        const letterURL = "letter.html";
+
+        yesButton.addEventListener("click", () => {
+            window.location.href = letterURL;
+        });
+
+        function moveNoButton() {
+            const padding = 20;
+
+            const maxX = window.innerWidth - noButton.offsetWidth - padding;
+            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+            const randomX = Math.max(
+                padding,
+                Math.random() * maxX
+            );
+
+            const randomY = Math.max(
+                padding,
+                Math.random() * maxY
+            );
+
+            noButton.style.position = "fixed";
+            noButton.style.left = randomX + "px";
+            noButton.style.top = randomY + "px";
+        }
+
+        // Desktop
+        noButton.addEventListener("mouseenter", moveNoButton);
+
+        // Mobile
+        noButton.addEventListener("touchstart", (event) => {
+            event.preventDefault();
+            moveNoButton();
+        });
+
+        // Also catches attempted clicks
+        noButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            moveNoButton();
+        });
+    </script>
+
+</body>
+</html>
