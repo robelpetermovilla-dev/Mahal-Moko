@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For You ❤️</title>
+    <title>For You Love ❤️</title>
 
     <style>
         * {
@@ -16,101 +15,307 @@
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+
+            background:
+                radial-gradient(circle at 20% 20%, #5b8cff 0%, transparent 35%),
+                radial-gradient(circle at 80% 80%, #8b5cf6 0%, transparent 35%),
+                linear-gradient(135deg, #071a52, #123b8f, #32145f);
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             padding: 30px;
             overflow-x: hidden;
         }
 
-        .letter {
-            position: relative;
-            width: min(700px, 95%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            animation: appear 1s ease;
-        }
-
-        .heart {
-            text-align: center;
-            font-size: 55px;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        h1 {
-            text-align: center;
-            color: #e84372;
-            font-size: 38px;
-            margin: 15px 0 30px;
-        }
-
-        .message {
-            color: #4a4a4a;
-            font-size: 19px;
-            line-height: 1.8;
-        }
-
-        .signature {
-            margin-top: 35px;
-            text-align: right;
-            color: #e84372;
-            font-size: 22px;
-            font-style: italic;
-        }
+        /* -------------------------
+           Floating Hearts
+        ------------------------- */
 
         .small-heart {
             position: fixed;
-            font-size: 20px;
-            opacity: 0.7;
-            animation: float 6s linear infinite;
+            bottom: -60px;
+            font-size: 25px;
+            opacity: 0;
+            pointer-events: none;
+
+            animation: floatUp 9s linear infinite;
+        }
+
+        @keyframes floatUp {
+
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform:
+                    translateY(-120vh)
+                    rotate(360deg)
+                    scale(1.3);
+
+                opacity: 0;
+            }
+        }
+
+        /* -------------------------
+           Letter
+        ------------------------- */
+
+        .letter {
+            position: relative;
+            z-index: 5;
+
+            width: min(700px, 95%);
+
+            background: rgba(255, 255, 255, 0.94);
+
+            padding: 50px;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                0 0 40px rgba(100, 150, 255, 0.25);
+
+            animation: appear 1.2s ease;
+
+            overflow: hidden;
         }
 
         @keyframes appear {
+
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px) scale(0.95);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
+        /* -------------------------
+           Main Heart
+        ------------------------- */
+
+        .heart {
+            text-align: center;
+            font-size: 65px;
+
+            animation:
+                heartbeat 1.4s ease-in-out infinite,
+                heartFloat 3s ease-in-out infinite;
+
+            filter:
+                drop-shadow(0 0 10px rgba(255, 60, 120, 0.6))
+                drop-shadow(0 0 25px rgba(255, 60, 120, 0.4));
+        }
+
         @keyframes heartbeat {
+
             0%, 100% {
                 transform: scale(1);
             }
 
+            15% {
+                transform: scale(1.18);
+            }
+
+            30% {
+                transform: scale(0.95);
+            }
+
+            45% {
+                transform: scale(1.12);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartFloat {
+
+            0%, 100% {
+                margin-top: 0;
+            }
+
             50% {
-                transform: scale(1.15);
+                margin-top: -8px;
             }
         }
 
-        @keyframes float {
-            from {
-                transform: translateY(100vh) rotate(0deg);
+        /* -------------------------
+           Title
+        ------------------------- */
+
+        h1 {
+            text-align: center;
+
+            color: #4267c9;
+
+            font-size: 40px;
+
+            margin: 15px 0 35px;
+
+            text-shadow:
+                0 2px 10px rgba(60, 100, 200, 0.2);
+        }
+
+        /* -------------------------
+           Typewriter Text
+        ------------------------- */
+
+        .message {
+            color: #3f3f3f;
+
+            font-size: 19px;
+
+            line-height: 1.9;
+        }
+
+        .message p {
+            margin-bottom: 25px;
+
+            /* Initially hidden */
+            opacity: 0;
+
+            min-height: 1.9em;
+        }
+
+        /* The actual typing effect */
+
+        .typing {
+            opacity: 1 !important;
+
+            overflow: hidden;
+
+            white-space: normal;
+
+            border-right: 2px solid #4267c9;
+
+            animation:
+                cursorBlink 0.7s step-end infinite;
+        }
+
+        @keyframes cursorBlink {
+
+            0%, 100% {
+                border-color: transparent;
             }
 
-            to {
-                transform: translateY(-120vh) rotate(360deg);
+            50% {
+                border-color: #4267c9;
             }
         }
+
+        /* -------------------------
+           Signature
+        ------------------------- */
+
+        .signature {
+            margin-top: 35px;
+
+            text-align: right;
+
+            color: #4267c9;
+
+            font-size: 22px;
+
+            font-style: italic;
+
+            opacity: 0;
+
+            transform: translateX(30px);
+
+            transition:
+                opacity 1.5s ease,
+                transform 1.5s ease;
+        }
+
+        .signature.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* -------------------------
+           Music Button
+        ------------------------- */
+
+        .music-button {
+            position: fixed;
+
+            bottom: 20px;
+            right: 20px;
+
+            z-index: 20;
+
+            border: none;
+
+            background: rgba(255,255,255,0.9);
+
+            color: #4267c9;
+
+            padding: 12px 18px;
+
+            border-radius: 30px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.2);
+
+            transition: 0.25s ease;
+        }
+
+        .music-button:hover {
+            transform: scale(1.05);
+            background: white;
+        }
+
+        /* -------------------------
+           Mobile
+        ------------------------- */
 
         @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
             .letter {
-                padding: 30px 25px;
+                padding: 35px 25px;
             }
 
             h1 {
                 font-size: 30px;
             }
 
+            .heart {
+                font-size: 55px;
+            }
+
             .message {
                 font-size: 17px;
+                line-height: 1.8;
+            }
+
+            .signature {
+                font-size: 19px;
             }
         }
     </style>
@@ -118,58 +323,342 @@
 
 <body>
 
-    <!-- Floating hearts -->
-    <div class="small-heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-    <div class="small-heart" style="left: 25%; animation-delay: 2s;">💕</div>
-    <div class="small-heart" style="left: 45%; animation-delay: 4s;">❤️</div>
-    <div class="small-heart" style="left: 70%; animation-delay: 1s;">💗</div>
-    <div class="small-heart" style="left: 90%; animation-delay: 3s;">💕</div>
+    <!-- Floating Hearts -->
+
+    <div class="small-heart"
+         style="left: 5%; animation-duration: 8s; animation-delay: 0s;">
+        💙
+    </div>
+
+    <div class="small-heart"
+         style="left: 20%; animation-duration: 10s; animation-delay: 2s;">
+        💜
+    </div>
+
+    <div class="small-heart"
+         style="left: 40%; animation-duration: 9s; animation-delay: 4s;">
+        ❤️
+    </div>
+
+    <div class="small-heart"
+         style="left: 60%; animation-duration: 12s; animation-delay: 1s;">
+        💕
+    </div>
+
+    <div class="small-heart"
+         style="left: 80%; animation-duration: 10s; animation-delay: 3s;">
+        💙
+    </div>
+
+    <div class="small-heart"
+         style="left: 92%; animation-duration: 8s; animation-delay: 5s;">
+        💜
+    </div>
+
+
+    <!-- Letter -->
 
     <div class="letter">
 
-        <div class="heart">❤️</div>
+        <div class="heart">
+            ❤️
+        </div>
 
-        <h1>To My Love</h1>
+        <h1>To My Love 💙</h1>
+
 
         <div class="message">
 
-            <p>
-                Dear <strong>[Her Name]</strong>,
+            <p data-speed="55">
+                My Dearest <strong> Allie </strong>,
             </p>
 
-            <p>
-                I just wanted to make something special for you because
-                you mean so much to me.
+            <p data-speed="45">
+                I couldn't sleep last night because 
+                I know that it's over between us.
             </p>
 
-            <p>
-                Every moment I spend with you is something I appreciate,
-                and I'm really grateful to have you in my life.
+            <p data-speed="45">
+               I'm not bitter anymore, because I know that what we had was real.
+               And if in some distant place in the future we see each other in our new lives,
             </p>
 
-            <p>
-                You make my days brighter just by being yourself.
-                I hope you always know how special you are to me.
+            <p data-speed="45">
+               I'll smile at you with joy and remember how we spent the summer beneath the trees, l
+               earning from each other and growing in love. 
             </p>
 
-            <p>
-                No matter what happens, I'll always treasure the memories
-                we've made together and all the moments still waiting for us.
+            <p data-speed="45">
+               The best love is the kind that awakens the soul and makes us reach for more, 
+               that plants a fire in our hearts and brings peace to our minds, 
+               and that's what you've given me. That's what I hope to give to you forever.
             </p>
 
-            <p>
-                I love you more than I can put into words. ❤️
+            <p data-speed="55">
+                Tangina bab mali na copy paste ko teka, pindutin mo yung button sa baba
             </p>
 
         </div>
 
+
         <div class="signature">
-            With all my love,<br>
-            <strong>[Your Name] ❤️</strong>
+
+            I'll be seeing you,<br>
+
+            <strong> Noah </strong>
+
         </div>
 
     </div>
 
+
+    <!-- Audio -->
+
+    <audio id="loveMusic" preload="auto">
+        <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- Music Control -->
+
+    <button class="music-button" id="musicButton">
+        🔊 Music
+    </button>
+
+
+    <script>
+
+        /* =========================================
+           TYPEWRITER EFFECT
+        ========================================= */
+
+        const paragraphs =
+            document.querySelectorAll(".message p");
+
+        const signature =
+            document.querySelector(".signature");
+
+
+        function typeParagraph(element) {
+
+            return new Promise((resolve) => {
+
+                element.classList.add("typing");
+
+                const originalHTML =
+                    element.innerHTML;
+
+                /*
+                    We temporarily extract the text.
+
+                    This lets the words/letters appear
+                    one by one while preserving the
+                    original HTML such as <strong>.
+                */
+
+                const temp =
+                    document.createElement("div");
+
+                temp.innerHTML = originalHTML;
+
+                const text =
+                    temp.textContent;
+
+                element.innerHTML = "";
+
+                let index = 0;
+
+                const speed =
+                    Number(element.dataset.speed) || 45;
+
+
+                function type() {
+
+                    if (index < text.length) {
+
+                        element.textContent +=
+                            text.charAt(index);
+
+                        index++;
+
+                        setTimeout(type, speed);
+
+                    } else {
+
+                        /*
+                            Remove cursor after this
+                            paragraph finishes.
+                        */
+
+                        element.classList.remove("typing");
+
+                        resolve();
+                    }
+                }
+
+                type();
+
+            });
+
+        }
+
+
+        async function startLetter() {
+
+            /*
+                Small delay so the card appears first.
+            */
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 1000)
+            );
+
+
+            for (const paragraph of paragraphs) {
+
+                await typeParagraph(paragraph);
+
+                /*
+                    Pause between paragraphs.
+                */
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, 500)
+                );
+            }
+
+
+            /*
+                Show signature at the end.
+            */
+
+            signature.classList.add("show");
+        }
+
+
+        startLetter();
+
+
+        /* =========================================
+           MUSIC
+        ========================================= */
+
+        const music =
+            document.getElementById("loveMusic");
+
+        const musicButton =
+            document.getElementById("musicButton");
+
+
+        let musicPlaying = false;
+
+
+        /*
+            Try to autoplay when page opens.
+        */
+
+        window.addEventListener("load", () => {
+
+            music.volume = 0.5;
+
+            music.play()
+                .then(() => {
+
+                    musicPlaying = true;
+
+                    musicButton.textContent =
+                        "🔊 Music On";
+
+                })
+                .catch(() => {
+
+                    /*
+                        Browser blocked autoplay.
+                        Music will start after the
+                        visitor interacts with the page.
+                    */
+
+                    musicButton.textContent =
+                        "🎵 Play Music";
+
+                });
+
+        });
+
+
+        /*
+            Play music when the user clicks/taps
+            anywhere if autoplay was blocked.
+        */
+
+        function startMusic() {
+
+            if (!musicPlaying) {
+
+                music.play()
+                    .then(() => {
+
+                        musicPlaying = true;
+
+                        musicButton.textContent =
+                            "🔊 Music On";
+
+                    })
+                    .catch(() => {
+
+                        console.log(
+                            "Music could not be played."
+                        );
+
+                    });
+            }
+        }
+
+
+        document.addEventListener(
+            "click",
+            startMusic,
+            { once: true }
+        );
+
+
+        document.addEventListener(
+            "touchstart",
+            startMusic,
+            { once: true }
+        );
+
+
+        /*
+            Music button
+        */
+
+        musicButton.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            if (music.paused) {
+
+                music.play();
+
+                musicButton.textContent =
+                    "🔊 Music On";
+
+                musicPlaying = true;
+
+            } else {
+
+                music.pause();
+
+                musicButton.textContent =
+                    "🔇 Music Off";
+
+                musicPlaying = false;
+            }
+
+        });
+
+    </script>
+
 </body>
 </html>
-```
