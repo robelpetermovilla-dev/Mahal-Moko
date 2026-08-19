@@ -292,97 +292,210 @@
 
     </div>
 
-    <script>
-        const noButton = document.getElementById("no");
-        const yesButton = document.getElementById("yes");
-        const message = document.getElementById("message");
+   <script>
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+    const message = document.getElementById("message");
 
-        let noScale = 1;
-        let yesScale = 1;
-        let attempts = 0;
+    let noScale = 1;
+    let yesScale = 1;
+    let attempts = 0;
 
-        const messages = [
-            "sure kana ba talaga dyan bab?? 🥺",
-            "Seryoso?? 😭",
-            "wag mo na kasing pilitin 😭",
-            "isa pang no 😌",
-            "Just press the yes button bebs... 💙",
-            "lumiliit na nga oh pinipilit pa... ",
-            "Okay, tama naaaa 😭",
-            "Alam ko namang mahal moko eh ❤️"
-        ];
+    const messages = [
+        "talaga ba beb? 🥺",
+        "seryoso ba to? 😭",
+        "angas ah 😭",
+        "di mo matatakasan yung yes 😌",
+        "press the yes alreadyyy bab 💙",
+        "ahhhh ganun... ",
+        "Okay, tama na yan 😭",
+        "You know you love me ❤️"
+    ];
 
-        /* YES BUTTON */
-        yesButton.addEventListener("click", () => {
-            window.location.href = "loveletter.html";
-        });
+    /* YES BUTTON */
+    yesButton.addEventListener("click", () => {
+        window.location.href = "loveletter.html";
+    });
 
-        /* NO BUTTON */
-        function moveNoButton() {
 
-            attempts++;
+    /* NO BUTTON MOVEMENT */
 
-            if (attempts <= messages.length) {
-                message.textContent = messages[attempts - 1];
-            } else {
-                message.textContent =
-                    "Okay... I think we both know the answer now ❤️";
-            }
+    function moveNoButton() {
 
-            /* Make No smaller */
-            noScale -= 0.12;
+        attempts++;
 
-            if (noScale < 0.25) {
-                noScale = 0.25;
-            }
-
-            /* Make Yes bigger */
-            yesScale += 0.12;
-
-            noButton.style.transform =
-                `scale(${noScale})`;
-
-            yesButton.style.transform =
-                `scale(${yesScale})`;
-
-            /* Move No around the screen */
-            const padding = 20;
-
-            const buttonWidth = noButton.offsetWidth * noScale;
-            const buttonHeight = noButton.offsetHeight * noScale;
-
-            const maxX =
-                window.innerWidth - buttonWidth - padding;
-
-            const maxY =
-                window.innerHeight - buttonHeight - padding;
-
-            const randomX =
-                Math.random() * Math.max(maxX, padding);
-
-            const randomY =
-                Math.random() * Math.max(maxY, padding);
-
-            noButton.style.position = "fixed";
-            noButton.style.left = randomX + "px";
-            noButton.style.top = randomY + "px";
+        /* Change message */
+        if (attempts <= messages.length) {
+            message.textContent = messages[attempts - 1];
+        } else {
+            message.textContent =
+                "Okay... I think we both know the answer now ❤️";
         }
 
-        /* Desktop */
-        noButton.addEventListener("mouseenter", moveNoButton);
 
-        /* Mobile */
-        noButton.addEventListener("touchstart", (event) => {
-            event.preventDefault();
-            moveNoButton();
-        });
+        /* Make No smaller */
+        noScale -= 0.1;
 
-        /* Click */
-        noButton.addEventListener("click", (event) => {
+        if (noScale < 0.35) {
+            noScale = 0.35;
+        }
+
+
+        /* Make Yes bigger */
+        yesScale += 0.1;
+
+
+        noButton.style.transform =
+            `scale(${noScale})`;
+
+        yesButton.style.transform =
+            `scale(${yesScale})`;
+
+
+        /*
+            Move the No button somewhere
+            guaranteed to be inside the screen.
+        */
+
+        noButton.style.position = "fixed";
+        noButton.style.zIndex = "9999";
+
+
+        const padding = 30;
+
+        const buttonWidth =
+            noButton.offsetWidth * noScale;
+
+        const buttonHeight =
+            noButton.offsetHeight * noScale;
+
+
+        const maxX =
+            window.innerWidth -
+            buttonWidth -
+            padding;
+
+
+        const maxY =
+            window.innerHeight -
+            buttonHeight -
+            padding;
+
+
+        /*
+            Keep coordinates safely inside
+            the viewport.
+        */
+
+        const randomX =
+            padding +
+            Math.random() *
+            Math.max(0, maxX - padding);
+
+
+        const randomY =
+            padding +
+            Math.random() *
+            Math.max(0, maxY - padding);
+
+
+        noButton.style.left =
+            `${randomX}px`;
+
+        noButton.style.top =
+            `${randomY}px`;
+    }
+
+
+    /* DESKTOP */
+
+    noButton.addEventListener(
+        "mouseenter",
+        moveNoButton
+    );
+
+
+    /* MOBILE */
+
+    noButton.addEventListener(
+        "touchstart",
+        (event) => {
+
             event.preventDefault();
+
             moveNoButton();
-        });
-    </script>
+        },
+        { passive: false }
+    );
+
+
+    /* CLICK */
+
+    noButton.addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+
+            moveNoButton();
+        }
+    );
+
+
+    /*
+        If the window is resized,
+        make sure the No button doesn't
+        end up outside the screen.
+    */
+
+    window.addEventListener("resize", () => {
+
+        if (noButton.style.position === "fixed") {
+
+            const rect =
+                noButton.getBoundingClientRect();
+
+            let x = rect.left;
+            let y = rect.top;
+
+            const padding = 20;
+
+            if (x < padding) {
+                x = padding;
+            }
+
+            if (y < padding) {
+                y = padding;
+            }
+
+            if (
+                x + rect.width >
+                window.innerWidth - padding
+            ) {
+                x =
+                    window.innerWidth -
+                    rect.width -
+                    padding;
+            }
+
+            if (
+                y + rect.height >
+                window.innerHeight - padding
+            ) {
+                y =
+                    window.innerHeight -
+                    rect.height -
+                    padding;
+            }
+
+            noButton.style.left =
+                `${Math.max(padding, x)}px`;
+
+            noButton.style.top =
+                `${Math.max(padding, y)}px`;
+        }
+    });
+</script>
 
 </body>
 </html>
