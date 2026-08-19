@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Question For You ❤️</title>
+    <title>BABABAB MAHAL MO BA AKOOO</title>
 
     <style>
         * {
@@ -17,27 +17,142 @@
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffd6e7, #ffeef5);
             overflow: hidden;
+
+            background:
+                radial-gradient(circle at 20% 20%, #5b8cff 0%, transparent 35%),
+                radial-gradient(circle at 80% 80%, #8b5cf6 0%, transparent 35%),
+                linear-gradient(135deg, #071a52, #123b8f, #32145f);
+
+            position: relative;
+        }
+
+        /* Floating hearts */
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 25px;
+            animation: floatUp linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
         }
 
         .container {
+            position: relative;
+            z-index: 10;
+
             text-align: center;
-            background: white;
+
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
             padding: 50px 40px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 30px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
+
             width: min(90%, 500px);
+
+            animation: cardAppear 1s ease;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Main heart */
+        .heart {
+            font-size: 75px;
+            margin-bottom: 15px;
+
+            display: inline-block;
+
+            filter:
+                drop-shadow(0 0 10px rgba(255, 80, 150, 0.8))
+                drop-shadow(0 0 25px rgba(255, 80, 150, 0.5));
+
+            animation:
+                heartbeat 1.4s ease-in-out infinite,
+                heartFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.18);
+            }
+
+            30% {
+                transform: scale(0.95);
+            }
+
+            45% {
+                transform: scale(1.12);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartFloat {
+            0%, 100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: -8px;
+            }
         }
 
         h1 {
-            color: #ff4f81;
+            color: white;
             font-size: 40px;
-            margin-bottom: 15px;
+            margin: 10px 0 15px;
+
+            text-shadow:
+                0 0 10px rgba(255,255,255,0.4),
+                0 0 25px rgba(120,170,255,0.5);
         }
 
         p {
-            color: #777;
+            color: rgba(255, 255, 255, 0.85);
             font-size: 18px;
             margin-bottom: 35px;
         }
@@ -45,7 +160,9 @@
         .buttons {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 25px;
+            min-height: 60px;
         }
 
         button {
@@ -53,136 +170,220 @@
             padding: 14px 30px;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: 0.2s;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
         }
 
         #yes {
-            background: #ff4f81;
+            background: linear-gradient(135deg, #ff4f9a, #ff246d);
             color: white;
+
+            box-shadow:
+                0 8px 25px rgba(255, 36, 109, 0.4);
         }
 
         #yes:hover {
             transform: scale(1.1);
-            background: #ff326d;
+            box-shadow:
+                0 10px 35px rgba(255, 36, 109, 0.65);
         }
 
         #no {
-            background: #ddd;
+            background: rgba(255,255,255,0.85);
             color: #555;
+
             position: relative;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.15);
         }
 
-        .heart {
-            font-size: 50px;
-            margin-bottom: 10px;
+        #no:hover {
+            background: white;
+        }
+
+        /* Little sparkle particles */
+        .sparkle {
+            position: absolute;
+            color: white;
+            pointer-events: none;
+            animation: sparkle 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .heart {
+                font-size: 65px;
+            }
+
+            .buttons {
+                gap: 15px;
+            }
+
+            button {
+                padding: 13px 22px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Floating hearts -->
+    <div class="floating-heart" style="left: 5%; animation-duration: 8s; animation-delay: 0s;">💙</div>
+    <div class="floating-heart" style="left: 15%; animation-duration: 11s; animation-delay: 2s;">♡</div>
+    <div class="floating-heart" style="left: 28%; animation-duration: 9s; animation-delay: 4s;">💜</div>
+    <div class="floating-heart" style="left: 45%; animation-duration: 12s; animation-delay: 1s;">💙</div>
+    <div class="floating-heart" style="left: 60%; animation-duration: 10s; animation-delay: 5s;">♡</div>
+    <div class="floating-heart" style="left: 75%; animation-duration: 9s; animation-delay: 3s;">💜</div>
+    <div class="floating-heart" style="left: 90%; animation-duration: 13s; animation-delay: 0s;">💙</div>
+
+    <!-- Sparkles -->
+    <div class="sparkle" style="top: 15%; left: 20%; animation-delay: 0s;">✦</div>
+    <div class="sparkle" style="top: 30%; right: 15%; animation-delay: 0.7s;">✧</div>
+    <div class="sparkle" style="bottom: 20%; left: 12%; animation-delay: 1.2s;">✦</div>
+    <div class="sparkle" style="bottom: 15%; right: 20%; animation-delay: 1.8s;">✧</div>
+
     <div class="container">
-        <div class="heart">❤️</div>
 
-        <h1>Mahal moko???</h1>
+        <div class="heart">💙</div>
 
-        <p>Pag isipan mo muna nang mabuti... </p>
+        <h1>Mahal mo ako??? 🥺</h1>
+
+        <p id="message">
+            Pag-isipan mo muna nang mabuti... 💭
+        </p>
 
         <div class="buttons">
-            <button id="yes">Yes ❤️</button>
+            <button id="yes">Yes 💙</button>
             <button id="no">No 😭</button>
         </div>
+
     </div>
 
     <script>
-    const noButton = document.getElementById("no");
-    const yesButton = document.getElementById("yes");
-    const message = document.querySelector("p");
+        const noButton = document.getElementById("no");
+        const yesButton = document.getElementById("yes");
+        const message = document.getElementById("message");
 
-    const letterURL = "loveletter.html";
+        let noScale = 1;
+        let yesScale = 1;
+        let attempts = 0;
 
-    let noScale = 1;
-    let yesScale = 1;
-    let attempts = 0;
+        const messages = [
+            "sure kana ba talaga dyan bab?? 🥺",
+            "Seryoso?? 😭",
+            "wag mo na kasing pilitin 😭",
+            "isa pang no 😌",
+            "Just press the yes button bebs... 💙",
+            "lumiliit na nga oh pinipilit pa... ",
+            "Okay, tama naaaa 😭",
+            "Alam ko namang mahal moko eh ❤️"
+        ];
 
-    const messages = [
-        "Are you sure? 🥺",
-        "Really?? 😭",
-        "Nice try 😭❤️",
-        "You can't escape the Yes button 😌",
-        "Just press Yes already! ❤️",
-        "The No button is getting smaller... 👀",
-        "Okay, that's enough 😭💕",
-        "You know you love me ❤️"
-    ];
-
+        /* YES BUTTON */
         yesButton.addEventListener("click", () => {
-        window.location.href = "loveletter.html";
-    });
+            window.location.href = "loveletter.html";
+        });
 
-    function moveNoButton() {
-        attempts++;
+        /* NO BUTTON */
+        function moveNoButton() {
 
-        // Change the message
-        if (attempts <= messages.length) {
-            message.textContent = messages[attempts - 1];
-        } else {
-            message.textContent = "Okay... I think we both know the answer now ❤️";
+            attempts++;
+
+            if (attempts <= messages.length) {
+                message.textContent = messages[attempts - 1];
+            } else {
+                message.textContent =
+                    "Okay... I think we both know the answer now ❤️";
+            }
+
+            /* Make No smaller */
+            noScale -= 0.12;
+
+            if (noScale < 0.25) {
+                noScale = 0.25;
+            }
+
+            /* Make Yes bigger */
+            yesScale += 0.12;
+
+            noButton.style.transform =
+                `scale(${noScale})`;
+
+            yesButton.style.transform =
+                `scale(${yesScale})`;
+
+            /* Move No around the screen */
+            const padding = 20;
+
+            const buttonWidth = noButton.offsetWidth * noScale;
+            const buttonHeight = noButton.offsetHeight * noScale;
+
+            const maxX =
+                window.innerWidth - buttonWidth - padding;
+
+            const maxY =
+                window.innerHeight - buttonHeight - padding;
+
+            const randomX =
+                Math.random() * Math.max(maxX, padding);
+
+            const randomY =
+                Math.random() * Math.max(maxY, padding);
+
+            noButton.style.position = "fixed";
+            noButton.style.left = randomX + "px";
+            noButton.style.top = randomY + "px";
         }
 
-        // Make No smaller
-        noScale -= 0.15;
+        /* Desktop */
+        noButton.addEventListener("mouseenter", moveNoButton);
 
-        // Make Yes bigger
-        yesScale += 0.15;
+        /* Mobile */
+        noButton.addEventListener("touchstart", (event) => {
+            event.preventDefault();
+            moveNoButton();
+        });
 
-        // Don't let No completely disappear
-        if (noScale < 0.2) {
-            noScale = 0.2;
-        }
+        /* Click */
+        noButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            moveNoButton();
+        });
+    </script>
 
-        noButton.style.transform = `scale(${noScale})`;
-        yesButton.style.transform = `scale(${yesScale})`;
-
-        // Move No somewhere random
-        const padding = 20;
-
-        const maxX = window.innerWidth - noButton.offsetWidth - padding;
-        const maxY = window.innerHeight - noButton.offsetHeight - padding;
-
-        const randomX = Math.max(
-            padding,
-            Math.random() * maxX
-        );
-
-        const randomY = Math.max(
-            padding,
-            Math.random() * maxY
-        );
-
-        noButton.style.position = "fixed";
-        noButton.style.left = randomX + "px";
-        noButton.style.top = randomY + "px";
-    }
-
-    // Desktop
-    noButton.addEventListener("mouseenter", moveNoButton);
-
-    // Mobile
-    noButton.addEventListener("touchstart", (event) => {
-        event.preventDefault();
-        moveNoButton();
-    });
-
-    // Clicking No
-    noButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        moveNoButton();
-    });
-</script>
-
-    
 </body>
 </html>
+
