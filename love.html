@@ -97,52 +97,92 @@ w<!DOCTYPE html>
     </div>
 
     <script>
-        const noButton = document.getElementById("no");
-        const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+    const message = document.querySelector("p");
 
-        // Change this to the URL of your actual letter
-        const letterURL = "letter.html";
+    const letterURL = "letter.html";
 
-        yesButton.addEventListener("click", () => {
-            window.location.href = letterURL;
-        });
+    let noScale = 1;
+    let yesScale = 1;
+    let attempts = 0;
 
-        function moveNoButton() {
-            const padding = 20;
+    const messages = [
+        "Are you sure? 🥺",
+        "Really?? 😭",
+        "Nice try 😭❤️",
+        "You can't escape the Yes button 😌",
+        "Just press Yes already! ❤️",
+        "The No button is getting smaller... 👀",
+        "Okay, that's enough 😭💕",
+        "You know you love me ❤️"
+    ];
 
-            const maxX = window.innerWidth - noButton.offsetWidth - padding;
-            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+    yesButton.addEventListener("click", () => {
+        window.location.href = letterURL;
+    });
 
-            const randomX = Math.max(
-                padding,
-                Math.random() * maxX
-            );
+    function moveNoButton() {
+        attempts++;
 
-            const randomY = Math.max(
-                padding,
-                Math.random() * maxY
-            );
-
-            noButton.style.position = "fixed";
-            noButton.style.left = randomX + "px";
-            noButton.style.top = randomY + "px";
+        // Change the message
+        if (attempts <= messages.length) {
+            message.textContent = messages[attempts - 1];
+        } else {
+            message.textContent = "Okay... I think we both know the answer now ❤️";
         }
 
-        // Desktop
-        noButton.addEventListener("mouseenter", moveNoButton);
+        // Make No smaller
+        noScale -= 0.15;
 
-        // Mobile
-        noButton.addEventListener("touchstart", (event) => {
-            event.preventDefault();
-            moveNoButton();
-        });
+        // Make Yes bigger
+        yesScale += 0.15;
 
-        // Also catches attempted clicks
-        noButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            moveNoButton();
-        });
-    </script>
+        // Don't let No completely disappear
+        if (noScale < 0.2) {
+            noScale = 0.2;
+        }
 
+        noButton.style.transform = `scale(${noScale})`;
+        yesButton.style.transform = `scale(${yesScale})`;
+
+        // Move No somewhere random
+        const padding = 20;
+
+        const maxX = window.innerWidth - noButton.offsetWidth - padding;
+        const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+        const randomX = Math.max(
+            padding,
+            Math.random() * maxX
+        );
+
+        const randomY = Math.max(
+            padding,
+            Math.random() * maxY
+        );
+
+        noButton.style.position = "fixed";
+        noButton.style.left = randomX + "px";
+        noButton.style.top = randomY + "px";
+    }
+
+    // Desktop
+    noButton.addEventListener("mouseenter", moveNoButton);
+
+    // Mobile
+    noButton.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        moveNoButton();
+    });
+
+    // Clicking No
+    noButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        moveNoButton();
+    });
+</script>
+
+    
 </body>
 </html>
